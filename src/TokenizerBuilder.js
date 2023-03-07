@@ -38,11 +38,19 @@ function TokenizerBuilder(option) {
  * Build Tokenizer instance by asynchronous manner
  * @param {TokenizerBuilder~onLoad} callback Callback function
  */
+var ifDict = false;
+var loader;
 TokenizerBuilder.prototype.build = function (callback) {
-    var loader = new DictionaryLoader(this.dic_path);
-    loader.load(function (err, dic) {
+    loader = new DictionaryLoader(this.dic_path);
+    ifDict = true;
+    console.log("dict:", ifDict);
+    if(ifDict){
+        loader.load(function (err, dic) {
+            callback(err, new Tokenizer(dic));
+        });
+    }else{
         callback(err, new Tokenizer(dic));
-    });
+    }
 };
 
 /**

@@ -21,8 +21,20 @@ var kuromoji = require("../src/kuromoji");
 var DIC_DIR = "dict/";
 
 // Load dictionaries from file, and prepare tokenizer
+var startTime = performance.now();
 kuromoji.builder({ dicPath: DIC_DIR }).build(function (error, tokenizer) {
     var path = tokenizer.tokenize("すもももももももものうち");
     console.log(path);
     module.exports = tokenizer;
 });
+var endTime = performance.now();
+console.log("1st", endTime - startTime);
+
+var startTime2 = performance.now();
+kuromoji.builder({ dicPath: DIC_DIR }).build(function (error, tokenizer) {
+    var path = tokenizer.tokenize("すもももももももものうち");
+    console.log(path);
+    module.exports = tokenizer;
+});
+var endTime2 = performance.now();
+console.log("2nd", endTime2 - startTime2);
