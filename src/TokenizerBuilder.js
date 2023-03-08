@@ -27,22 +27,36 @@ var DictionaryLoader = require("./loader/NodeDictionaryLoader");
  * @constructor
  */
 function TokenizerBuilder(option) {
-    if (option.dicPath == null) {
-        this.dic_path = "dict/";
-    } else {
-        this.dic_path = option.dicPath;
-    }
+  if (option.dicPath == null) {
+    this.dic_path = "dict/";
+  } else {
+    this.dic_path = option.dicPath;
+  }
 }
 
 /**
  * Build Tokenizer instance by asynchronous manner
  * @param {TokenizerBuilder~onLoad} callback Callback function
  */
+var ifDic = false;
+var tokenizer;
+var loader;
+
 TokenizerBuilder.prototype.build = function (callback) {
-    var loader = new DictionaryLoader(this.dic_path);
+  if (!ifDic) {
+    console.log("初回");
+    loader = new DictionaryLoader(this.dic_path);
     loader.load(function (err, dic) {
-        callback(err, new Tokenizer(dic));
+      tokenizer = new Tokenizer(dic);
+      callback(err, tokenizer);
     });
+    ifDic = true;
+  } else {
+    console.log("二界目以降");
+    loader.load(function (err, dic) {
+      callback(err, tokenizer);
+    });
+  }
 };
 
 /**
