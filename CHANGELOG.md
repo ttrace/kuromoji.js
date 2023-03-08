@@ -1,7 +1,3 @@
-<a name="0.1.3"></a>
-## [0.1.3](https://github.com/ttrace/kuromoji.js)
- * cahce enabled on loading dictionary
-
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/takuyaa/kuromoji.js/compare/0.1.1...0.1.2) (2018-03-20)
 

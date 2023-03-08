@@ -26,13 +26,9 @@ var DynamicDictionaries = require("../dict/DynamicDictionaries");
  * @param {string} dic_path Dictionary path
  * @constructor
  */
-var ifDict = false;
-var loader;
-
 function DictionaryLoader(dic_path) {
     this.dic = new DynamicDictionaries();
     this.dic_path = dic_path;
-    // ifDict = true;
 }
 
 DictionaryLoader.prototype.loadArrayBuffer = function (file, callback) {
@@ -51,8 +47,6 @@ DictionaryLoader.prototype.load = function (load_callback) {
     async.parallel([
         // Trie
         function (callback) {
-            if(ifDict) return callback(null);
-            console.log('Trie');
             async.map([ "base.dat.gz", "check.dat.gz" ], function (filename, _callback) {
                 loadArrayBuffer(path.join(dic_path, filename), function (err, buffer) {
                     if(err) {
@@ -73,8 +67,6 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Token info dictionaries
         function (callback) {
-            if(ifDict) return callback(null);
-            console.log('Token info dictionaries');
             async.map([ "tid.dat.gz", "tid_pos.dat.gz", "tid_map.dat.gz" ], function (filename, _callback) {
                 loadArrayBuffer(path.join(dic_path, filename), function (err, buffer) {
                     if(err) {
@@ -96,8 +88,6 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Connection cost matrix
         function (callback) {
-            if(ifDict) return callback(null);
-            console.log('Connection cost matrix');
             loadArrayBuffer(path.join(dic_path, "cc.dat.gz"), function (err, buffer) {
                 if(err) {
                     return callback(err);
@@ -109,8 +99,6 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Unknown dictionaries
         function (callback) {
-            if(ifDict) return callback(null);
-            console.log('Unknown dictionaries');
             async.map([ "unk.dat.gz", "unk_pos.dat.gz", "unk_map.dat.gz", "unk_char.dat.gz", "unk_compat.dat.gz", "unk_invoke.dat.gz" ], function (filename, _callback) {
                 loadArrayBuffer(path.join(dic_path, filename), function (err, buffer) {
                     if(err) {
@@ -137,7 +125,6 @@ DictionaryLoader.prototype.load = function (load_callback) {
     ], function (err) {
         load_callback(err, dic);
     });
-    ifDict = true;
 };
 
 /**
