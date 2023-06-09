@@ -1,5 +1,5 @@
 {
-  "name": "kuromoji-cashe",
+  "name": "kuromoji",
   "description": "JavaScript implementation of Japanese morphological analyzer",
   "version": "0.1.4",
   "author": "Taiyo Fujii<taiyo@taiyolab.com>, Takuya Asano <takuya.a@gmail.com>",
