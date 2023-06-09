@@ -44,7 +44,6 @@ var loader;
 
 TokenizerBuilder.prototype.build = function (callback) {
   if (!ifDic) {
-    console.log("初回");
     loader = new DictionaryLoader(this.dic_path);
     loader.load(function (err, dic) {
       tokenizer = new Tokenizer(dic);
@@ -52,7 +51,6 @@ TokenizerBuilder.prototype.build = function (callback) {
     });
     ifDic = true;
   } else {
-    console.log("二界目以降");
     loader.load(function (err, dic) {
       callback(err, tokenizer);
     });
